@@ -9,6 +9,9 @@ https://github.com/Jingjing-Duan/bestbuy-store-admin
 ## bestbuy-product-service
 https://github.com/Jingjing-Duan/bestbuy-product-service
 
+## bestbuy-inventory-consumer
+https://github.com/Jingjing-Duan/bestbuy-inventory-consumer
+
 ## bestbuy-order-service
 https://github.com/Jingjing-Duan/bestbuy-order-service
 
