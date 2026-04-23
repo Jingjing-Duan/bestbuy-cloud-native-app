@@ -1,0 +1,107 @@
+
+
+services:
+  mongodb:
+    image: mongo:6
+    container_name: bestbuy-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: bestbuy-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  product-service:
+    build: ../bestbuy-product-service
+    container_name: bestbuy-product-service
+    restart: always
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: 3001
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_DB: bestbuy_products
+    depends_on:
+      - mongodb
+
+  order-service:
+    build: ../bestbuy-order-service
+    container_name: bestbuy-order-service
+    restart: always
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: 3002
+      MONGO_URI: mongodb://mongodb:27017/test
+      RABBITMQ_URL: amqp://rabbitmq
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  makeline-service:
+    build: ../bestbuy-makeline-service
+    container_name: bestbuy-makeline-service
+    restart: always
+    ports:
+      - "3003:3003"
+    environment:
+      PORT: 3003
+      MONGO_URI: mongodb://mongodb:27017/test
+      RABBITMQ_URL: amqp://rabbitmq
+      MAKELINE_QUEUE: makeline.queue
+    depends_on:
+      - mongodb
+      - rabbitmq
+
+  inventory-consumer:
+    build: ../bestbuy-inventory-consumer
+    container_name: bestbuy-inventory-consumer
+    restart: always
+    ports:
+      - "3004:3004"
+    environment:
+      PORT: 3004
+      MONGO_URI: mongodb://mongodb:27017/test
+      RABBITMQ_URL: amqp://rabbitmq
+      EXCHANGE_NAME: order.created
+      QUEUE_NAME: inventory.queue
+    depends_on:
+      - mongodb
+      - rabbitmq
+      - product-service
+
+  store-front:
+    build: ../bestbuy-store-front
+    container_name: bestbuy-store-front
+    restart: always
+    ports:
+      - "8082:80"
+    environment:
+      VITE_PRODUCT_SERVICE_URL: http://product-service:3001
+      VITE_ORDER_SERVICE_URL: http://order-service:3002
+    depends_on:
+      - product-service
+      - order-service
+
+  store-admin:
+    build: ../bestbuy-store-admin
+    container_name: bestbuy-store-admin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      VITE_PRODUCT_SERVICE_URL: http://product-service:3001
+      VITE_ORDER_SERVICE_URL: http://order-service:3002
+    depends_on:
+      - product-service
+      - order-service
+
+volumes:
+  mongo-data:
