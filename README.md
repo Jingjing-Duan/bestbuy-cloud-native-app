@@ -138,42 +138,6 @@ Verify order processing status
 | Inventory-Consumer | [https://github.com/Jingjing-Duan/bestbuy-inventory-consumer](https://github.com/Jingjing-Duan/bestbuy-inventory-consumer) | [https://hub.docker.com/r/duan0029/inventory-consumer](https://hub.docker.com/r/duan0029/inventory-consumer) |
 =======
 
-## bestbuy-product-service
-https://github.com/Jingjing-Duan/bestbuy-product-service
-
-
-## bestbuy-inventory-consumer
-https://github.com/Jingjing-Duan/bestbuy-inventory-consumer
-
-
-## bestbuy-order-service
-https://github.com/Jingjing-Duan/bestbuy-order-service
-
-
-## bestbuy-makeline-service
-https://github.com/Jingjing-Duan/bestbuy-makeline-service
-
-
-## bestbuy-cloud-deployment
-https://github.com/Jingjing-Duan/bestbuy-cloud-deployment
->>>>>>> 2f5ea31c6ca638fba6c8d3159937fd6a96b4bf60
-
-
-## Deployment Files  
-
-All Kubernetes YAML manifests are located in:  
-
-```bash
-Deployment Files/  
-```
-
-This includes:
-
-Deployments  
-Services  
-ConfigMaps  
-Secrets  
-StatefulSets (MongoDB)  
 
 
 
