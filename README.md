@@ -67,7 +67,6 @@ flowchart LR
 
 Customer-facing web application used to browse products and place orders.  
 
-<<<<<<< HEAD
 🔹 Store-Admin  
 
 Admin web application used to monitor order processing results (Makeline).  
@@ -136,7 +135,7 @@ Verify order processing status
 | Order-Service      | [https://github.com/Jingjing-Duan/bestbuy-order-service](https://github.com/Jingjing-Duan/bestbuy-order-service)           | [https://hub.docker.com/r/duan0029/order-service](https://hub.docker.com/r/duan0029/order-service)           |
 | Makeline-Service   | [https://github.com/Jingjing-Duan/bestbuy-makeline-service](https://github.com/Jingjing-Duan/bestbuy-makeline-service)     | [https://hub.docker.com/r/duan0029/makeline-service](https://hub.docker.com/r/duan0029/makeline-service)     |
 | Inventory-Consumer | [https://github.com/Jingjing-Duan/bestbuy-inventory-consumer](https://github.com/Jingjing-Duan/bestbuy-inventory-consumer) | [https://hub.docker.com/r/duan0029/inventory-consumer](https://hub.docker.com/r/duan0029/inventory-consumer) |
-=======
+
 
 
 
