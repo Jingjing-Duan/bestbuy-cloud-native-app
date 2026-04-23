@@ -1,5 +1,15 @@
-# bestbuy-cloud-native-app
+# Best Buy Cloud-Native Application
 
+## Demo Video
+
+
+## Averview  
+
+This project is a cloud-native microservices application deployed on Azure Kubernetes Service (AKS).  
+
+The system simulates an e-commerce platform where customers can browse products, place orders, and administrators can monitor order processing.  
+
+The application follows a microservices architecture and uses asynchronous messaging for decoupled order processing.  
 
 ## Architecture Diagram
 
@@ -36,8 +46,9 @@ flowchart LR
     SF --> PS
     SF --> OS
     SA --> PS
-    SA --> OS
+    SA --> ML
 
+    OS --> PS
     OS --> DB
     OS --> MQ
 
@@ -45,32 +56,101 @@ flowchart LR
     MQ --> IC
 
     ML --> DB
-    IC --> PS
+    IC --> DB
+
     PS --> DB
+
 ```
+
+## Application Explanation  
+🔹 Store-Front  
+
+Customer-facing web application used to browse products and place orders.  
+
+🔹 Store-Admin  
+
+Admin web application used to monitor order processing results (Makeline).  
+
+🔹 Product-Service  
+
+Manages product data, including product details and stock.  
+
+🔹 Order-Service  
+
+Handles order creation and publishes messages to RabbitMQ.  
+
+🔹 Makeline-Service  
+
+Background worker that processes orders asynchronously and updates order status.  
+
+🔹 Inventory-Consumer  
+
+Consumes messages from RabbitMQ and updates product stock in MongoDB.  
+
+🔹 RabbitMQ  
+
+Message broker used for asynchronous communication between services.  
+
+🔹 MongoDB  
+
+Database used to store product and order-related data.  
+
+## Deployment Instructions
+
+1. Build and Push Docker Images  
+
+For each service:  
+
+docker build -t <your-docker-username>/<service-name>:latest .  
+docker push <your-docker-username>/<service-name>:latest  
+
+2. Deploy to Kubernetes (AKS)  
+
+Apply all Kubernetes manifests:  
+
+kubectl apply -f Deployment Files/  
+
+3. Verify Deployment  
+
+kubectl get pods  
+kubectl get svc  
+
+4. Access Applications  
+Store-Front → External IP from LoadBalancer  
+Store-Admin → External IP from LoadBalancer  
+
+5. Test the Application  
+
+Open Store-Front  
+Place an order  
+Open Store-Admin  
+Verify order processing status  
+
+## Links Table
+| Service            | GitHub Repository                                                                                                          | Docker Image                                                                                                           |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Store-Front        | [https://github.com/Jingjing-Duan/bestbuy-store-front](https://github.com/Jingjing-Duan/bestbuy-store-front)               | [https://hub.docker.com/r/duan0029/store-front](https://hub.docker.com/r/duan0029/store-front)               |
+| Store-Admin        | [https://github.com/Jingjing-Duan/bestbuy-store-admin](https://github.com/Jingjing-Duan/bestbuy-store-admin)               | [https://hub.docker.com/r/duan0029/store-admin](https://hub.docker.com/r/duan0029/store-admin)               |
+| Product-Service    | [https://github.com/Jingjing-Duan/bestbuy-product-service](https://github.com/Jingjing-Duan/bestbuy-product-service)       | [https://hub.docker.com/r/duan0029/product-service](https://hub.docker.com/r/duan0029/product-service)       |
+| Order-Service      | [https://github.com/Jingjing-Duan/bestbuy-order-service](https://github.com/Jingjing-Duan/bestbuy-order-service)           | [https://hub.docker.com/r/duan0029/order-service](https://hub.docker.com/r/duan0029/order-service)           |
+| Makeline-Service   | [https://github.com/Jingjing-Duan/bestbuy-makeline-service](https://github.com/Jingjing-Duan/bestbuy-makeline-service)     | [https://hub.docker.com/r/duan0029/makeline-service](https://hub.docker.com/r/duan0029/makeline-service)     |
+| Inventory-Consumer | [https://github.com/Jingjing-Duan/bestbuy-inventory-consumer](https://github.com/Jingjing-Duan/bestbuy-inventory-consumer) | [https://hub.docker.com/r/duan0029/inventory-consumer](https://hub.docker.com/r/duan0029/inventory-consumer) |
+
+
+## Deployment Files  
+
+All Kubernetes YAML manifests are located in:  
+
+```bash
+Deployment Files/  
 ```
 
-## bestbuy-store-front
-https://github.com/Jingjing-Duan/bestbuy-store-front
+This includes:
 
-## bestbuy-store-admin
-https://github.com/Jingjing-Duan/bestbuy-store-admin
-
-## bestbuy-product-service
-https://github.com/Jingjing-Duan/bestbuy-product-service
-
-## bestbuy-inventory-consumer
-https://github.com/Jingjing-Duan/bestbuy-inventory-consumer
-
-## bestbuy-order-service
-https://github.com/Jingjing-Duan/bestbuy-order-service
-
-## bestbuy-makeline-service
-https://github.com/Jingjing-Duan/bestbuy-makeline-service
-
-## bestbuy-cloud-deployment
-https://github.com/Jingjing-Duan/bestbuy-cloud-deployment
-
-
+Deployments  
+Services  
+ConfigMaps  
+Secrets  
+StatefulSets (MongoDB)  
 
 

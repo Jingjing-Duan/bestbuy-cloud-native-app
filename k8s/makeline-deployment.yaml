@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: makeline-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: makeline-service
+  template:
+    metadata:
+      labels:
+        app: makeline-service
+    spec:
+      containers:
+        - name: makeline-service
+          image: duan0029/makeline-service
+          ports:
+            - containerPort: 3003
+          env:
+            - name: PORT
+              value: "3003"
+            - name: MONGO_URI
+              value: "mongodb://admin:password123@mongodb:27017/?authSource=admin"
+            - name: MONGO_DB
+              value: "bestbuy_makeline"
+            - name: RABBITMQ_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: RABBITMQ_URL
+            - name: MAKELINE_QUEUE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: MAKELINE_QUEUE

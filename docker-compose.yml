@@ -1,5 +1,3 @@
-
-
 services:
   mongodb:
     image: mongo:6
@@ -19,7 +17,7 @@ services:
       - "15672:15672"
 
   product-service:
-    build: ../bestbuy-product-service
+    image: duan0029/product-service
     container_name: bestbuy-product-service
     restart: always
     ports:
@@ -32,7 +30,7 @@ services:
       - mongodb
 
   order-service:
-    build: ../bestbuy-order-service
+    image: duan0029/order-service
     container_name: bestbuy-order-service
     restart: always
     ports:
@@ -46,7 +44,7 @@ services:
       - rabbitmq
 
   makeline-service:
-    build: ../bestbuy-makeline-service
+    image: duan0029/makeline-service
     container_name: bestbuy-makeline-service
     restart: always
     ports:
@@ -61,7 +59,7 @@ services:
       - rabbitmq
 
   inventory-consumer:
-    build: ../bestbuy-inventory-consumer
+    image: duan0029/inventory-consumer
     container_name: bestbuy-inventory-consumer
     restart: always
     ports:
@@ -78,7 +76,7 @@ services:
       - product-service
 
   store-front:
-    build: ../bestbuy-store-front
+    image: duan0029/store-front
     container_name: bestbuy-store-front
     restart: always
     ports:
@@ -91,7 +89,7 @@ services:
       - order-service
 
   store-admin:
-    build: ../bestbuy-store-admin
+    image: duan0029/store-admin
     container_name: bestbuy-store-admin
     restart: always
     ports:
